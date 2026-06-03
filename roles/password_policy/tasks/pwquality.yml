@@ -1,0 +1,8 @@
+---
+- name: Ensuring password complexity
+  template:
+    src: pwquality_conf.j2
+    dest: /etc/security/pwquality.conf
+    mode: 0644
+    owner: root
+    group: root

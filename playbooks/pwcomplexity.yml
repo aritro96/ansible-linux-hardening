@@ -1,0 +1,6 @@
+---
+- name: Enforcing password complexity 
+  hosts: all 
+  
+  roles:
+    - password_policy

@@ -1,0 +1,3 @@
+---
+- name: Enabling pam with sssd and faillock
+  command: " authselect select sssd with-faillock --force "

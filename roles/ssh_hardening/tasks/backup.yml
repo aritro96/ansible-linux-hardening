@@ -1,0 +1,24 @@
+---
+- name: Backup sshd_config file
+  copy:
+    src: /etc/ssh/sshd_config
+    dest: "/etc/ssh/sshd_config_bkp_{{ ansible_date_time.iso8601 }}"
+    remote_src: true
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Check if hardening_conf exists
+  stat:
+    path: /etc/ssh/sshd_config.d/hardening.conf
+  register: hardening_conf_exist
+
+- name: Backup /etc/ssh/sshd_config.d/hardening.conf
+  copy:
+    src: /etc/ssh/sshd_config.d/hardening.conf
+    dest: "/etc/ssh/sshd_config.d/hardening.conf_bkp_{{ ansible_date_time.iso8601 }}"
+    remote_src: true
+    mode: 0600
+    owner: root
+    group: root
+  when: hardening_conf_exist.stat.exists

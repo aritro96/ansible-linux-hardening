@@ -1,0 +1,12 @@
+---
+- name: Validate and Restart sshd
+  block:
+    - name: Check sshd validation
+      shell: sshd -t
+      listen: "Validate and Restart sshd"
+
+    - name: Restarting sshd
+      service:
+        name: sshd
+        state: restarted
+      listen: "Validate and Restart sshd"

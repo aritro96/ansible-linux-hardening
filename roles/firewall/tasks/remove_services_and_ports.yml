@@ -1,0 +1,19 @@
+
+---
+- name: Remove extra services
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: true
+#    zone: "{{ tobe_default_zone }}"
+  loop: "{{ extra_services }}"
+
+- name: Remove extra ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: true
+#    zone: "{{ tobe_default_zone }}"
+  loop: "{{ extra_ports }}"

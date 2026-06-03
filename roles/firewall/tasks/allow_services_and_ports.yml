@@ -1,0 +1,18 @@
+---
+- name: Allow missing services
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+    zone: "{{ tobe_default_zone }}"
+  loop: "{{ missing_services }}"
+
+- name: Allow missing ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: true
+    zone: "{{ tobe_default_zone }}"
+  loop: "{{ missing_ports }}"

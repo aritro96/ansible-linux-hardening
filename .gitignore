@@ -1,0 +1,5 @@
+*.retry
+*.log
+.vscode/
+__pycache__/
+secret.yml

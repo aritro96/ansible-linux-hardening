@@ -1,0 +1,24 @@
+---
+- name: Service Active
+  set_fact:
+    is_active: "{{ 'PASS' if now_active.rc == 0 else 'FAIL' }}"
+
+- name: Service enabled
+  set_fact:
+    is_enabled: "{{ 'PASS' if now_enabled.rc == 0 else 'FAIL' }}"
+
+- name: Firewalld allowed Check
+  set_fact:
+    validation:
+      is_port: "{{ 'PASS' if (now_ports | difference(tobe_allowed_ports) | length == 0) else 'FAIL'}}"
+      is_service: "{{ 'PASS' if (now_services | difference(tobe_allowed_services) | length == 0) else 'FAIL' }}"
+      is_zone: "{{ 'PASS' if (now_zone | difference(tobe_default_zone) | length ==0) else 'FAIL' }}"
+
+- name: Generating compliance report
+  template:
+    src: compliance.j2
+    dest: "/root/ansible_aritro/reports/firewalld/compliance/{{ inventory_hostname }}_firewall_compliance"
+    mode: 0640
+    owner: root
+    group: root
+  delegate_to: localhost

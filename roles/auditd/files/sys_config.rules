@@ -1,0 +1,12 @@
+#System Configuration
+-w /etc/ssh/sshd_config -p wa -k ssh_config
+-w /etc/ssh/sshd_config.d/ -p wa -k ssh_config
+-w /etc/ssh/ -p wa -k ssh_integrity
+-w /etc/pam.d/ -p wa -k pam
+-w /etc/selinux/ -p wa -k selinux
+-w /etc/audit/ -p wa -k audit_config
+
+# Cron Auditor
+-w /etc/cron.allow -p wa -k cron
+-w /etc/cron.deny -p wa -k cron
+-w /etc/cron.d/ -p wa -k cron

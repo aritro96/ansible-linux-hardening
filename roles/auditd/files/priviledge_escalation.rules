@@ -1,0 +1,4 @@
+-w /etc/sudoers -p wa -k priviledge
+-w /etc/sudoers.d/ -p wa -k priviledge
+-a always,exit -F arch=b64 -S execve -F euid=0 -k priviledge_cmd
+-w /bin/su -p x -k su_attempts

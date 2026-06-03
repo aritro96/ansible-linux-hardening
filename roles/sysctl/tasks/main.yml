@@ -1,0 +1,6 @@
+---
+- import_tasks: backup.yml
+- import_tasks: copying_hardening_files.yml
+- import_tasks: apply_hardening.yml
+- import_tasks: verification.yml
+- import_tasks: compliance.yml

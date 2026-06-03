@@ -1,0 +1,8 @@
+---
+- import_tasks: prechecks.yml
+- import_tasks: backup.yml
+- import_tasks: including_sshd_config_directory.yml
+- import_tasks: hardening.yml
+- import_tasks: verification.yml
+- import_tasks: compliance.yml
+  

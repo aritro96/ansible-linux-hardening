@@ -1,0 +1,28 @@
+---
+- name: Pass/Fail auditd status
+  set_fact:
+    audit_pass: "{{ 'PASS' if final_audit_status.rc == 0 else 'FAIL' }}"
+
+- name: Pass/Fail rules status
+  set_fact:
+    rules_pass: "{{ 'PASS' if rules_status.rc == 0 else 'FAIL' }}" 
+
+- name: Checking if critcal paths are present in audit rules
+  set_fact:
+    validation:
+      user_file: "{{ 'PASS' if '/etc/passwd' in loaded_audit_rules.stdout else 'FAIL' }}"
+      pass_file: "{{ 'PASS' if '/etc/shadow' in loaded_audit_rules.stdout else 'FAIL' }}"
+      kernel_par: "{{ 'PASS' if 'modules' in loaded_audit_rules.stdout else 'FAIL' }}"
+      priviledge: "{{ 'PASS' if 'priviledge' and 'su_attempts' in loaded_audit_rules.stdout else 'FAIL' }}"
+      ssh_file: "{{ 'PASS' if '/etc/ssh/sshd_config' and '/etc/ssh/sshd_config.d' in loaded_audit_rules.stdout else 'FAIL' }}"
+      pam_file: "{{ 'PASS' if '/etc/pam.d' in loaded_audit_rules.stdout else 'FAIL' }}"
+      cron_file: "{{ 'PASS' if 'cron' in loaded_audit_rules.stdout else 'FAIL' }}"
+
+- name: Generate compliance report
+  template:
+    src: compliance.j2
+    dest: "/root/ansible_aritro/reports/auditcompliance/{{ inventory_hostname }}_audit_hardening"
+    mode: 0644
+    owner: root
+    group: root
+  delegate_to: localhost

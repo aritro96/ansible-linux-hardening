@@ -1,0 +1,9 @@
+---
+- name: Load augen rules
+  command: augenrules --load
+  when: 
+    - augenrules_check.rc == 0
+  listen: "Load augen rules"
+
+- name: restart auditd for rollback
+  command: service auditd restart

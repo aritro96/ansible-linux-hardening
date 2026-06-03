@@ -1,0 +1,12 @@
+---
+# tasks file for firewall
+
+- import_tasks: prechecks.yml
+- import_tasks: backups.yml
+- import_tasks: install_firewall.yml
+- import_tasks: set_default_zone.yml
+- import_tasks: diff_of_ports_and_services.yml
+- import_tasks: allow_services_and_ports.yml
+- import_tasks: remove_services_and_ports.yml
+- import_tasks: verification.yml
+- import_tasks: compliance.yml

@@ -1,0 +1,8 @@
+---
+- name: Ensuring protection against brute-force-entry
+  template:
+    src: faillock_conf.j2
+    dest: /etc/security/faillock.conf
+    mode: 0644
+    owner: root
+    group: root   

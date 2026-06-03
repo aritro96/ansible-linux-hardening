@@ -1,0 +1,7 @@
+---
+- name: Health check accross servers
+  hosts: all
+  gather_facts: true
+
+  roles:
+    - health_check

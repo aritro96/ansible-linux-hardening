@@ -1,0 +1,7 @@
+---
+- name: Hardening of server
+  hosts: all
+  
+
+  roles:
+    - ssh_hardening

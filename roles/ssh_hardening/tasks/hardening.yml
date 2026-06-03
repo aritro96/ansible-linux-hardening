@@ -1,0 +1,9 @@
+---
+- name: Using the Hardening Template
+  template:
+    src: hardening_conf.j2
+    dest: /etc/ssh/sshd_config.d/hardening.conf
+    mode: 0600
+    owner: root
+    group: root
+  notify: Validate and Restart sshd

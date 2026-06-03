@@ -1,0 +1,13 @@
+---
+- name: Copy all hardening files
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/sysctl.d/{{ item }}"
+    mode: 0640
+    owner: root
+    group: root
+  loop:
+    - 99_ipv4_hardening.conf
+    - 99_ipv6_hardening.conf
+    - 99_kernel_protection.conf
+    - 99_memory_protection.conf

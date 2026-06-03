@@ -1,0 +1,22 @@
+---
+- name: Esure the sshd package exists
+  package:
+    name: openssh-server
+    state: present
+
+- name: Ensure that the config file exists
+  file:
+    path: /etc/ssh/sshd_config
+    state: file
+
+- name: Ensure target directory exists
+  file:
+    path: /etc/ssh/sshd_config.d/
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: Ensure current sshd config is valid
+  command: sshd -t
+  changed_when: false

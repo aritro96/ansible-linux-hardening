@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+              Default Firewalld Settings(before deplyment)
+-------------------------------------------------------------------------------
+
+Hostname: {{ inventory_hostname }}
+Generated On: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+-------------------------------------------------------------------------------
+
+The default zone:          {{ current_state.results[0].stdout }}
+The current actice zones:  {{ current_state.results[3].stdout }}
+The allowed ports:         {{ current_state.results[1].stdout }}
+The allowed services:      {{ current_state.results[2].stdout }}
+All config:                {{ current_state.results[4].stdout }}
+
+-------------------------------------------------------------------------------

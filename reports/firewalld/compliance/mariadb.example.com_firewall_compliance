@@ -1,0 +1,22 @@
+-------------------------------------------------------------------------------
+                          Firewall Compliance Report
+-------------------------------------------------------------------------------
+
+Hostname: mariadb.example.com
+Generated On: 2026-05-30 05:19:14
+
+-------------------------------------------------------------------------------
+
+Firewall service running:                  PASS
+Firewall service is enabled:               PASS
+
+-------------------------------------------------------------------------------
+
+Are only designated ports open?            PASS
+Are only designated services allowed?      PASS
+Is the default zone correctly selected?    PASS
+
+-------------------------------------------------------------------------------
+
+
+OVERALL RESULTS:                            PASS

@@ -1,0 +1,24 @@
+SSH Compliance Report
+=======================
+
+Hostname: webservera.example.com
+Generated on: 2026-05-30 05:16:12
+
+=======================
+
+Service: PASS
+Port: PASS
+
+=======================
+
+PermitRootLogin: PASS
+PasswordAuthentication: PASS
+LoginGraceTime: PASS
+ClientAliveInterval: PASS
+MaxAuthTries: PASS
+
+=======================
+
+OVERALL RESULT: PASS
+
+

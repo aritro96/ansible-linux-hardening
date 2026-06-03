@@ -1,0 +1,44 @@
+-------------------------------------------------------------
+           Password Complexity Compliance Report
+-------------------------------------------------------------
+
+Hostname: {{ inventory_hostname }}
+Generated on: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+-------------------------------------------------------------
+Current PAM config: {{ pam_config_status }}
+----------------------------------------------------------------
+  Current config validation of /etc/security/pwquality.config
+----------------------------------------------------------------
+
+Minimum Password Length: {{ pw_quality_conf_values.minlen }}
+Minimun Number of Digits: {{ pw_quality_conf_values.dcredit }}
+Minimum Number of Upper Case: {{ pw_quality_conf_values.ucredit }}
+Minimum Number of Lower Case: {{ pw_quality_conf_values.lcredit }}
+Minimum Number of Special Characters: {{ pw_quality_conf_values.ocredit }}
+Minimum Number of Classes: {{ pw_quality_conf_values.minclass }}
+
+--------------------------------------------------------------
+   Current config validation of /etc/security/faillock.conf
+--------------------------------------------------------------
+
+Maximum Tries before user is temp locked: {{ faillock_conf_values.deny }}
+Time within which user can do the max tries: {{ faillock_conf_values.fail_interval }}
+Time after which user will be unlocked: {{ faillock_conf_values.unlock_time }}
+Time after which root user will be unlocked: {{ faillock_conf_values.root_unlock_time }}
+
+-------------------------------------------------------
+   Current config validation of /etc/login.defs
+-------------------------------------------------------
+
+Minimum Number of days before passwd change: {{ logindef_values.PASS_MIN_DAYS }}
+Maximum Number of days before which passwd expires: {{ logindef_values.PASS_MAX_DAYS }}
+Days before which user is reminded about passwd expires: {{ logindef_values.PASS_WARN_AGE }}
+Minimum Length of password: {{ logindef_values.PASS_MIN_LEN }}
+
+-------------------------------------------------------
+                 Overall Compliance
+-------------------------------------------------------
+{% set all_pass = validation.values() | list | unique == ['PASS'] and pam_config_status == 'PASS' %}
+
+OVERALL RESULTS: {{ 'PASS' if all_pass else 'FAIL' }}

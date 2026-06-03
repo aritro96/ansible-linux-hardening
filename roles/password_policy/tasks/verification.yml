@@ -1,0 +1,16 @@
+---
+- name: Checking validity of current configuration
+  command: authselect check
+  register: curr_conf
+
+- name: Register output of /etc/security/pwquality.conf
+  shell: cat /etc/security/pwquality.conf | grep -v "^#"
+  register: pwquality_out
+
+- name: Register output of /etc/security/faillock.conf
+  shell: cat /etc/security/faillock.conf | grep -v "^#"
+  register: faillock_out
+
+- name: Register output of login defaults
+  shell: cat /etc/login.defs | grep -v "^#"
+  register: logindef_out

@@ -1,0 +1,33 @@
+SSH Compliance Report
+=======================
+
+Hostname: {{ inventory_hostname }}
+Generated on: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+=======================
+
+Service: {{ sshd_running }}
+Port: {{ sshd_port }}
+
+=======================
+
+PermitRootLogin: {{ sshd_config.root_login_change }}
+PasswordAuthentication: {{ sshd_config.password_auth }}
+LoginGraceTime: {{ sshd_config.logingracetime }}
+ClientAliveInterval: {{ sshd_config.clientaliveinterval }}
+MaxAuthTries: {{ sshd_config.maxauthtries }}
+
+=======================
+
+{% set all_pass = 
+  sshd_running == "PASS" and
+  sshd_port == "PASS" and
+  sshd_config.root_login_change == "PASS" and
+  sshd_config.password_auth == "PASS" and
+  sshd_config.logingracetime == "PASS" and
+  sshd_config.clientaliveinterval == "PASS" and
+  sshd_config.maxauthtries == "PASS" 
+  %}
+OVERALL RESULT: {{ 'PASS' if all_pass else 'FAIL' }}
+
+

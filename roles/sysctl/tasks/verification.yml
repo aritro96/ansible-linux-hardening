@@ -1,0 +1,6 @@
+---
+- name: Get current sysctl values
+  command: sysctl {{ item.key }}
+  loop: "{{ sysctl_expected_values | dict2items }}"
+  register: systectl_runtime_values
+  changed_when: false

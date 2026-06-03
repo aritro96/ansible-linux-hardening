@@ -1,0 +1,8 @@
+PermitRootLogin {{ allow_root_login }}
+PasswordAuthentication {{ allow_login_with_password }}
+LoginGraceTime {{ password_timer }}
+PermitEmptyPasswords no
+ClientAliveInterval {{ idle_timeout }}
+ClientAliveCountMax 0
+MaxAuthTries {{ max_auth_tries }}
+X11Forwarding no

@@ -1,0 +1,46 @@
+---
+- name: Register sshd running status
+  set_fact:
+    sshd_running: >-
+      {{ 'PASS' if sshd_service_stat.stdout == "active" else 'FAIL' }}
+
+- name: Register sshd port status
+  set_fact:
+    sshd_port: >-
+     {{ 'PASS' if sshd_port_stat.rc == 0 else 'FAIL' }}
+
+- name: Extracting logingracetime
+  set_fact:
+    logingracetime_value: "{{ sshd_config_stat.stdout | regex_findall('logingracetime\\s+(\\d+)') | first }}"
+
+- name: Extracting client alive interval
+  set_fact:
+    clientaliveinterval_value: "{{ sshd_config_stat.stdout | regex_findall('clientaliveinterval\\s+(\\d+)') | first }}"
+
+- name: Extracting maxauthtries interval
+  set_fact:
+    authtry_value: "{{ sshd_config_stat.stdout | regex_findall('maxauthtries\\s+(\\d+)') | first }}"
+
+- name: Verifying sshd config file
+  set_fact:
+    sshd_config:
+      root_login_change: "{{ 'PASS' if 'permitrootlogin no' in sshd_config_stat.stdout else 'FAIL' }}"
+      password_auth: "{{ 'PASS' if 'passwordauthentication yes' in sshd_config_stat.stdout else 'FAIL' }}"
+      logingracetime: "{{ 'PASS' if (logingracetime_value|string) == (password_timer|string) else 'FAIL' }}"
+      clientaliveinterval: "{{ 'PASS' if (clientaliveinterval_value|string) == (idle_timeout|string) else 'FAIL' }}"
+      maxauthtries: "{{ 'PASS' if (authtry_value|string) == (max_auth_tries|string) else 'FAIL' }}"
+
+- name: Debug sshd_config
+  debug:
+    msg: "{{ logingracetime_value }} is equal to {{ password_timer }}"
+
+- name: Generate the compliance report
+  template:
+    src: sshd_compliance_report.j2
+    dest: "/root/ansible_aritro/reports/ssh_compliance_report/{{ inventory_hostname }}_ssh_compliance_report.txt"
+    mode: 0644
+  delegate_to: localhost
+
+
+
+

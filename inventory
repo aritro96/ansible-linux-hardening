@@ -1,0 +1,8 @@
+[dbservers]
+mariadb.example.com
+
+[webservers]
+webservera.example.com
+
+[control_node]
+ansiblehost.example.com

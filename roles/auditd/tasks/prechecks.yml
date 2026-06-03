@@ -1,0 +1,68 @@
+---
+- name: Checking supported OS
+  assert:
+    that:
+      - ansible_os_family == "RedHat"
+      - ansible_distribution_major_version | int >= 8
+
+- name: Gathering all packages data
+  package_facts:
+    manager: auto
+
+- name: Checking if auditd package exists in server
+  set_fact:
+    auditd_installed: "{{ 'audit' in ansible_facts.packages }}"  #returns boolean
+
+- name: Displaying if auditd is present/not present
+  debug:
+    msg: "audit is present"
+  when: auditd_installed
+  changed_when: false
+
+- name: Check the enabled mode for auditd
+  command: auditctl -s
+  register: audit_status
+  changed_when: false
+  when: auditd_installed
+
+- name: Register reboot requirement
+  set_fact:
+    reboot_flag: >-
+      {% if 'enabled 2' in audit_status.stdout %}
+        REBOOT_REQUIRED
+      {% elif 'enabled 1' in audit_status.stdout %}
+        Auditd is enabled, no reboot required
+      {% else %}
+        Need to change grub config and then reboot
+      {% endif %}
+
+- name: Check the existing audit rules
+  command: augenrules --check
+  register: rules_result
+  failed_when: false
+  changed_when: false
+
+- name: Display current state of audit rules
+  debug:
+    msg: >-
+     {{ 
+       'All Existing rules are okay'
+        if rules_result.rc == 0
+        else ' Current audit rules are wrong' 
+      }}
+  
+- name: Check auditd running status
+  command: systemctl is-active auditd
+  register: auditd_status
+  failed_when: false
+  changed_when: false
+
+- name: Display auditd running status
+  debug:
+    msg: >-
+     {{ 
+       'Auditd is running'
+       if auditd_status.rc == 0
+       else 'Auditd is not running' 
+     }}
+  when: auditd_installed

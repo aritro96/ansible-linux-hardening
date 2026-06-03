@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+                          Firewall Compliance Report
+-------------------------------------------------------------------------------
+
+Hostname: {{ inventory_hostname }}
+Generated On: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+-------------------------------------------------------------------------------
+
+Firewall service running:                  {{ is_active }}
+Firewall service is enabled:               {{ is_enabled }}
+
+-------------------------------------------------------------------------------
+
+Are only designated ports open?            {{ validation.is_port }}
+Are only designated services allowed?      {{ validation.is_service }}
+Is the default zone correctly selected?    {{ validation.is_zone }}
+
+-------------------------------------------------------------------------------
+
+{% set all_pass =
+   (validation.values() | list | unique == ['PASS'])
+   and
+   (is_active == 'PASS')
+    and
+   (is_enabled == 'PASS')
+ %}
+
+OVERALL RESULTS:                            {{ 'PASS' if all_pass else 'FAIL' }}

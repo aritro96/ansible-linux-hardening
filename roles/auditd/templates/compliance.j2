@@ -1,0 +1,31 @@
+--------------- AUDITD COMPLIANCE REPORT -------------------
+
+Hostname: {{ inventory_hostname }}
+Generated on: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+------------------------------------------------------------
+
+Auditd service running: {{ audit_pass }}
+Rules loaded correctly: {{ rules_pass }}
+
+Passwd file is audited: {{ validation.user_file }}
+Shadow file is audited: {{ validation.pass_file }}
+Kernel module change is audited: {{ validation.kernel_par }}
+Privilege escalations audited: {{ validation.priviledge }}
+SSH files audited: {{ validation.ssh_file }}
+PAM files audited: {{ validation.pam_file }}
+Cron files audited: {{ validation.cron_file }}
+
+------------------------------------------------------------
+
+Does system need to be rebooted? ----> {{ reboot_flag }}
+
+------------------------------------------------------------
+
+{% set all_pass = (
+    validation.values() | list | unique == ['PASS']
+    and audit_pass == 'PASS'
+    and rules_pass == 'PASS'
+) %}
+
+OVERALL RESULTS: {{ 'PASS' if all_pass else 'FAIL' }}

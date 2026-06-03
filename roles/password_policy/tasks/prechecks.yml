@@ -1,0 +1,21 @@
+---
+- name: Registering if authselect is present
+  command: which authselect
+  register: authselect_result
+  changed_when: false
+
+- name: Displaying if authselect is present or not
+  debug:
+    msg: "authselect is present"
+  changed_when: false
+  when: authselect_result.rc == 0
+  
+- name: Checking the current profile of authselect
+  command: authselect current
+  register: authselect_current
+  changed_when: false
+
+- name: Displaying current profile
+  debug:
+    msg: " The current profile is {{ authselect_current.stdout }}"
+  changed_when: false

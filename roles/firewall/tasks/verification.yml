@@ -1,0 +1,26 @@
+---
+- name: Get the allowed ports, service and default zone
+  command: "{{ item }}"
+  register: now_all
+  loop:
+    - firewall-cmd --list-ports
+    - firewall-cmd --list-services
+    - firewall-cmd --get-default-zone
+
+- name: Convert outputs to facts
+  set_fact:
+    now_ports: "{{ now_all.results[0].stdout.split() }}"
+    now_services: "{{ now_all.results[1].stdout.split() }}"
+    now_zone: "{{ now_all.results[2].stdout }}"
+
+- name: debug
+  debug:
+    var: now_services
+
+- name: Checking service status
+  command: "systemctl is-active firewalld"
+  register: now_active
+
+- name: Checking service enabled
+  command: "systemctl is-enabled firewalld"
+  register: now_enabled

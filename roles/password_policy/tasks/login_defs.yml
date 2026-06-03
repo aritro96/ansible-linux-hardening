@@ -1,0 +1,11 @@
+---
+- name: Changing the login defs
+  lineinfile:
+    path: /etc/login.defs
+    regex: "^{{ item.key }}"
+    line: "{{ item.key }} {{ item.value }}"
+  loop:
+    - { key: "PASS_MIN_DAYS", value: "{{ password_min_days }}" }
+    - { key: "PASS_MAX_DAYS", value: "{{ password_max_days }}" }
+    - { key: "PASS_WARN_AGE", value: "{{ password_warn_days }}" }
+    - { key: "PASS_MIN_LEN", value: "{{ password_min_length }}" }

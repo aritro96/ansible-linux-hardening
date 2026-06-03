@@ -1,0 +1,36 @@
+---
+- name: Check if parameters are correct
+  set_fact:
+    sysctl_compliance_report: >-
+      {{
+        sysctl_compliance_report | default({}) |
+        combine ({
+          item.item.key:
+          (
+            'PASS'
+            if (item.stdout.split('=')[1] | trim) == item.item.value
+            else
+            'FAIL'
+          )
+        })
+      }}
+  loop: "{{ systectl_runtime_values.results }}"
+
+- name: Create the directory
+  file:
+    path: /reports/kernel_hardening/
+    state: directory
+    mode: 0770
+    owner: root
+    group: root
+  delegate_to: localhost
+  run_once: true
+
+- name: Genertaing the compliance report
+  template:
+    src: compliance.j2
+    dest: "/root/ansible_aritro/reports/kernel_hardening/{{ inventory_hostname }}_kernel_hardening"
+    mode: 0640
+    owner: root
+    group: root
+  delegate_to: localhost

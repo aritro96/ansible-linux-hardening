@@ -1,0 +1,17 @@
+==================================================
+           SYSCTL HARDENING REPORT
+==================================================
+
+Hostname: {{ inventory_hostname }}
+Generated On: {{ ansible_date_time.date }} {{ ansible_date_time.time }}
+
+===================================================
+
+{% for parameter,status in sysctl_compliance_report.items() %}
+{{ parameter }} : {{ status }}
+{% endfor %}
+
+====================================================
+{% set all_pass =
+  (sysctl_compliance_report.values() | list | unique == ['PASS']) %}
+OVERALL RESULTS: {{ 'PASS' if all_pass else 'FAIL' }}

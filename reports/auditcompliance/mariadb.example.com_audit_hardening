@@ -1,0 +1,27 @@
+--------------- AUDITD COMPLIANCE REPORT -------------------
+
+Hostname: mariadb.example.com
+Generated on: 2026-05-30 05:15:12
+
+------------------------------------------------------------
+
+Auditd service running: PASS
+Rules loaded correctly: PASS
+
+Passwd file is audited: PASS
+Shadow file is audited: PASS
+Kernel module change is audited: PASS
+Privilege escalations audited: PASS
+SSH files audited: PASS
+PAM files audited: PASS
+Cron files audited: PASS
+
+------------------------------------------------------------
+
+Does system need to be rebooted? ---->   Auditd is enabled, no reboot required
+
+
+------------------------------------------------------------
+
+
+OVERALL RESULTS: PASS

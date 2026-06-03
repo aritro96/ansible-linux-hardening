@@ -1,0 +1,12 @@
+---
+- name: Final audit service status
+  command: systemctl is-active auditd
+  register: final_audit_status
+
+- name: Final rules load status
+  command: augenrules --check
+  register: rules_status
+
+- name: Capturing all audit rules
+  command: auditctl -l
+  register: loaded_audit_rules

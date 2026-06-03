@@ -1,0 +1,24 @@
+- name: Saving the current zones, allowed ports and allowed service_state
+  command: "{{ item }}"
+  register: current_state
+  loop:
+    - firewall-cmd --get-default-zone
+    - firewall-cmd --list-ports
+    - firewall-cmd --list-services
+    - firewall-cmd --get-active-zones
+    - firewall-cmd --list-all
+  when: firewall_installed
+
+#- name: Debug
+#  debug:
+#   var: current_state
+
+- name: Generate the current pre-checks defaults file
+  template:
+    src: backup_defaults.j2
+    dest: "/root/ansible_aritro/reports/firewalld/backup/{{ inventory_hostname }}_{{ ansible_date_time.date }}"
+    mode: 0640
+    owner: root
+    group: root
+  delegate_to: localhost
+  when: firewall_installed

@@ -1,0 +1,28 @@
+==================================================
+           SYSCTL HARDENING REPORT
+==================================================
+
+Hostname: mariadb.example.com
+Generated On: 2026-05-30 05:29:41
+
+===================================================
+
+net.ipv4.ip_forward : PASS
+net.ipv4.conf.all.accept_source_route : PASS
+net.ipv4.conf.default.accept_source_route : PASS
+net.ipv4.conf.all.accept_redirects : PASS
+net.ipv4.conf.default.accept_redirects : PASS
+net.ipv4.conf.all.secure_redirects : PASS
+net.ipv4.conf.default.secure_redirects : PASS
+net.ipv4.conf.all.send_redirects : PASS
+net.ipv4.conf.default.send_redirects : PASS
+net.ipv4.tcp_syncookies : PASS
+net.ipv4.conf.all.log_martians : PASS
+net.ipv6.conf.all.disable_ipv6 : PASS
+kernel.dmesg_restrict : PASS
+kernel.yama.ptrace_scope : PASS
+kernel.kptr_restrict : PASS
+kernel.randomize_va_space : PASS
+
+====================================================
+OVERALL RESULTS: PASS

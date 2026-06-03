@@ -1,0 +1,15 @@
+---
+- name: Verify if sshd is running
+  shell: systemctl is-active sshd
+  register: sshd_service_stat
+  changed_when: false
+
+- name: Verify is sshd is listening on port
+  shell: ss -tulnp | grep -w 22
+  register: sshd_port_stat
+  changed_when: false
+
+- name: All config stats
+  command: sshd -T
+  register: sshd_config_stat
+  changed_when: false

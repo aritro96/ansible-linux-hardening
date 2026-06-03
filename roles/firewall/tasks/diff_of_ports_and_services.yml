@@ -1,0 +1,24 @@
+---
+- name: Convert allowed ports to list
+  set_fact:
+    list_curr_allowed_ports: "{{ current_state.results[1].stdout.split() }}"
+
+- name: Register missing ports
+  set_fact:
+    missing_ports: "{{ tobe_allowed_ports | difference(list_curr_allowed_ports) }}"
+
+- name: Register extra ports
+  set_fact:
+    extra_ports: "{{ list_curr_allowed_ports | difference(tobe_allowed_ports) }}"
+
+- name: Convert allowed services to list
+  set_fact:
+    list_curr_allowed_services: "{{ current_state.results[2].stdout.split() }}"
+
+- name: Register missing service
+  set_fact:
+    missing_services: "{{ tobe_allowed_services | difference(list_curr_allowed_services) }}"
+
+- name: Register extra ports
+  set_fact:
+    extra_services: "{{ list_curr_allowed_services | difference(tobe_allowed_services) }}"

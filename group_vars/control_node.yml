@@ -1,0 +1,11 @@
+tobe_default_zone: public
+tobe_allowed_ports: 
+  - 22/tcp 
+  - 2049/tcp
+  - 443/tcp
+tobe_allowed_services: 
+  - ssh 
+  - dhcpv6-client 
+  - cockpit
+  - smtp
+  - nfs

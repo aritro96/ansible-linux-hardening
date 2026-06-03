@@ -1,0 +1,9 @@
+---
+- name: Ensuring that sshd_config.d is included.
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^Include /etc/ssh/sshd_config\.d/\*\.conf'
+    line: "Include /etc/ssh/sshd_config.d/*.conf"
+    insertafter: BOF
+    state: present
+    backup: yes

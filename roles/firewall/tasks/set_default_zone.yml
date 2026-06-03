@@ -1,0 +1,6 @@
+---
+- name: Set default zone
+  ansible.posix.firewalld:
+    zone: "{{ tobe_default_zone }}"
+    state: enabled
+    permanent: true

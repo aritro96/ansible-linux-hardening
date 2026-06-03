@@ -1,0 +1,26 @@
+---
+- name: Changing max size of log rotating in auditd.conf
+  lineinfile:
+    path: /etc/audit/auditd.conf
+    regexp: "{{ item.key }}"
+    line: "{{ item.value }}"
+    state: present
+    backup: yes
+  loop: 
+    - { key: "^max_log_file\\s*" , value: "max_log_file = 10" }
+    - { key: "^num_logs\\s*" , value: "num_logs = 6" }
+
+- name: restart auditd
+  command: service auditd restart
+  register: service_state
+
+- name: Current config wrong, rolling back updates
+  copy:
+    src: /etc/audit/auditd_bkp.conf
+    dest: /etc/audit/auditd.conf
+    remote_src: true
+    mode: 0640
+    owner: root
+    group: root
+  when: service_state.rc != 0
+  notify: "restart auditd for rollback"

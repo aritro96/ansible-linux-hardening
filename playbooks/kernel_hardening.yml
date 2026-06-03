@@ -1,0 +1,7 @@
+---
+- name: Hardening auditd
+  hosts: all 
+  gather_facts: true
+ 
+  roles:
+    - sysctl 

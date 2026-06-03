@@ -1,0 +1,7 @@
+---
+- name: Hardening of server
+  hosts: all
+  
+
+  roles:
+    - /root/ansible_aritro/roles/ssh_hardening

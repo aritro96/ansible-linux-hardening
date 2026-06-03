@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+              Default Firewalld Settings(before deplyment)
+-------------------------------------------------------------------------------
+
+Hostname: ansiblehost.example.com
+Generated On: 2026-05-30 14:49:30
+
+-------------------------------------------------------------------------------
+
+The default zone:          public
+The current actice zones:  public
+  interfaces: ens160 ens192
+The allowed ports:         22/tcp 443/tcp 2049/tcp
+The allowed services:      cockpit dhcpv6-client nfs smtp ssh
+All config:                public (active)
+  target: default
+  icmp-block-inversion: no
+  interfaces: ens160 ens192
+  sources: 
+  services: cockpit dhcpv6-client nfs smtp ssh
+  ports: 22/tcp 2049/tcp 443/tcp
+  protocols: 
+  forward: no
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+
+-------------------------------------------------------------------------------
