@@ -1,7 +1,11 @@
 ---
 - name: Hardening of server
   hosts: all
-  
+  gather_facts: true
 
   roles:
-    - /root/ansible_aritro/roles/ssh_hardening
+    - ssh_hardening
+    - auditd
+    - firewall
+    - password_policy
+    - sysctl
