@@ -69,7 +69,6 @@ The project uses a modular role-based architecture to automate security configur
 ├── roles
 │   ├── auditd
 │   ├── firewall
-│   ├── health_check
 │   ├── password_policy
 │   ├── ssh_hardening
 │   └── sysctl
