@@ -1,27 +1,27 @@
 ---
 - name: Backing up the pwquality file
-  copy:
+  ansible.builtin.copy:
     src: /etc/security/pwquality.conf
     dest: "/etc/security/pwquality_bkp_{{ ansible_date_time.date }}.conf"
     remote_src: true
     owner: root
     group: root
-    mode: 0644
+    mode: '0640'
 
 - name: Backing up the faillock file
-  copy:
+  ansible.builtin.copy:
     src: /etc/security/faillock.conf
     dest: "/etc/security/faillock_bkp_{{ ansible_date_time.date }}.conf"
     remote_src: true
     owner: root
     group: root
-    mode: 0644
+    mode: '0640'
 
 - name: Backing up login defs
-  copy:
+  ansible.builtin.copy:
     src: /etc/login.defs
     dest: /etc/login_bkp_{{ ansible_date_time.date }}.defs
     remote_src: true
     owner: root
     group: root
-    mode: 0644
+    mode: '0640'

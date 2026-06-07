@@ -1,10 +1,10 @@
 ---
 - name: Check the current pam comfiguration
-  set_fact:
+  ansible.builtin.set_fact:
     pam_config_status: "{{ 'PASS' if curr_conf.rc == 0 else 'FAIL' }}"
 
 - name: Extracting the current pwquality config
-  set_fact:
+  ansible.builtin.set_fact:
     pw_quality_conf_values: >-
       {{
         pw_quality_conf_values | default({}) |
@@ -25,7 +25,7 @@
     - { key: "minclass", regex: '(?im)^minclass\s*=\s*(\S+)' }
 
 - name: Extracting the current faillock config
-  set_fact:
+  ansible.builtin.set_fact:
     faillock_conf_values: >-
       {{
         faillock_conf_values | default({}) |
@@ -44,7 +44,7 @@
     - { key: "root_unlock_time", regex: '(?im)^root_unlock_time\s*=\s*(\S+)' }
 
 - name: Extracting the current logindefs
-  set_fact:
+  ansible.builtin.set_fact:
     logindef_values: >-
       {{
         logindef_values | default({}) |
@@ -63,7 +63,7 @@
     - { key: "PASS_MIN_LEN", regex: '(?im)^PASS_MIN_LEN\s+(\S+)' }
 
 - name: Checking if parameters are correctly
-  set_fact:
+  ansible.builtin.set_fact:
     validation: >-
       {{
         validation | default({}) |
@@ -77,52 +77,52 @@
   loop:
     - name: "minlen"
       current: "{{ pw_quality_conf_values.minlen }}"
-      expected: "{{ password_min_length }}"
+      expected: "{{ password_policy_password_min_length }}"
     - name: "dcredit"
       current: "{{ pw_quality_conf_values.dcredit }}"
-      expected: "{{ min_num_digit }}"
+      expected: "{{ password_policy_min_num_digit }}"
     - name: "ucredit"
       current: "{{ pw_quality_conf_values.ucredit }}"
-      expected: "{{ min_upper_case }}"
+      expected: "{{ password_policy_min_upper_case }}"
     - name: "lcredit"
       current: "{{ pw_quality_conf_values.lcredit }}"
-      expected: "{{ min_lower_case }}"
+      expected: "{{ password_policy_min_lower_case }}"
     - name: "ocredit"
       current: "{{ pw_quality_conf_values.ocredit }}"
-      expected: "{{ min_oth_char }}"
+      expected: "{{ password_policy_min_oth_char }}"
     - name: "minclass"
       current: "{{ pw_quality_conf_values.minclass }}"
-      expected: "{{ min_num_class }}"
+      expected: "{{ password_policy_min_num_class }}"
     - name: "deny"
       current: "{{ faillock_conf_values.deny }}"
-      expected: "{{ brute_force_num }}"
+      expected: "{{ password_policy_brute_force_num }}"
     - name: "time_within_check"
       current: "{{ faillock_conf_values.fail_interval }}"
-      expected: "{{ time_within_check }}"
+      expected: "{{ password_policy_time_within_check }}"
     - name: "time_to_unlock"
       current: "{{ faillock_conf_values.unlock_time }}"
-      expected: "{{ time_to_unlock }}"
+      expected: "{{ password_policy_time_to_unlock }}"
     - name: "time_to_unlock_root"
       current: "{{ faillock_conf_values.root_unlock_time }}"
-      expected: "{{ time_to_unlock_root }}"
+      expected: "{{ password_policy_time_to_unlock_root }}"
     - name: "password_min_days"
       current: "{{ logindef_values.PASS_MIN_DAYS }}"
-      expected: "{{ password_min_days }}"
+      expected: "{{ password_policy_password_min_days }}"
     - name: "password_max_days"
       current: "{{ logindef_values.PASS_MAX_DAYS }}"
-      expected: "{{ password_max_days }}"
+      expected: "{{ password_policy_password_max_days }}"
     - name: "password_warn_age"
       current: "{{ logindef_values.PASS_WARN_AGE }}"
-      expected: "{{ password_warn_days }}"
+      expected: "{{ password_policy_password_warn_days }}"
     - name: "password_min_len"
       current: "{{ logindef_values.PASS_MIN_LEN }}"
-      expected: "{{ password_min_length }}"
+      expected: "{{ password_policy_password_min_length }}"
 
 - name: Generate the pwcomplexity report
-  template:
+  ansible.builtin.template:
     src: pwcomplex_compliance_report.j2
     dest: "/root/ansible_aritro/reports/pwcomplexity_reports/{{ inventory_hostname }}_password_compliance"
-    mode: 0644
+    mode: '0644'
     owner: root
     group: root
   delegate_to: localhost

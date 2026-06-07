@@ -1,3 +1,4 @@
 ---
 - name: Enabling pam with sssd and faillock
-  command: " authselect select sssd with-faillock --force "
+  ansible.builtin.command: " authselect select sssd with-faillock --force "
+  changed_when: false
