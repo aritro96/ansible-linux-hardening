@@ -1,8 +1,8 @@
 ---
 - name: Ensuring protection against brute-force-entry
-  template:
+  ansible.builtin.template:
     src: faillock_conf.j2
     dest: /etc/security/faillock.conf
-    mode: 0644
+    mode: '0640'
     owner: root
-    group: root   
+    group: root

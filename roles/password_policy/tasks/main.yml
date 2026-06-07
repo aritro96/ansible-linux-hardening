@@ -1,9 +1,17 @@
 ---
-- import_tasks: prechecks.yml
-- import_tasks: backup.yml
-- import_tasks: sssd_with_faillock.yml
-- import_tasks: pwquality.yml
-- import_tasks: faillock.yml
-- import_tasks: login_defs.yml
-- import_tasks: verification.yml
-- import_tasks: compliance.yml
+- name: Take all important prechecks
+  ansible.builtin.import_tasks: prechecks.yml
+- name: Taking backup of the config files
+  ansible.builtin.import_tasks: backup.yml
+- name: Enabling sssd with faillock
+  ansible.builtin.import_tasks: sssd_with_faillock.yml
+- name: Enforcing password quality
+  ansible.builtin.import_tasks: pwquality.yml
+- name: Enforcing faillock config
+  ansible.builtin.import_tasks: faillock.yml
+- name: Enforcing login defaults
+  ansible.builtin.import_tasks: login_defs.yml
+- name: Task for verification
+  ansible.builtin.import_tasks: verification.yml
+- name: Check the compliance
+  ansible.builtin.import_tasks: compliance.yml

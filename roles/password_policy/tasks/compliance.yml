@@ -1,10 +1,10 @@
 ---
 - name: Check the current pam comfiguration
-  set_fact:
+  ansible.builtin.set_fact:
     pam_config_status: "{{ 'PASS' if curr_conf.rc == 0 else 'FAIL' }}"
 
 - name: Extracting the current pwquality config
-  set_fact:
+  ansible.builtin.set_fact:
     pw_quality_conf_values: >-
       {{
         pw_quality_conf_values | default({}) |
@@ -25,7 +25,7 @@
     - { key: "minclass", regex: '(?im)^minclass\s*=\s*(\S+)' }
 
 - name: Extracting the current faillock config
-  set_fact:
+  ansible.builtin.set_fact:
     faillock_conf_values: >-
       {{
         faillock_conf_values | default({}) |
@@ -44,7 +44,7 @@
     - { key: "root_unlock_time", regex: '(?im)^root_unlock_time\s*=\s*(\S+)' }
 
 - name: Extracting the current logindefs
-  set_fact:
+  ansible.builtin.set_fact:
     logindef_values: >-
       {{
         logindef_values | default({}) |
@@ -63,7 +63,7 @@
     - { key: "PASS_MIN_LEN", regex: '(?im)^PASS_MIN_LEN\s+(\S+)' }
 
 - name: Checking if parameters are correctly
-  set_fact:
+  ansible.builtin.set_fact:
     validation: >-
       {{
         validation | default({}) |
@@ -119,10 +119,10 @@
       expected: "{{ password_min_length }}"
 
 - name: Generate the pwcomplexity report
-  template:
+  ansible.builtin.template:
     src: pwcomplex_compliance_report.j2
     dest: "/root/ansible_aritro/reports/pwcomplexity_reports/{{ inventory_hostname }}_password_compliance"
-    mode: 0644
+    mode: '0644'
     owner: root
     group: root
   delegate_to: localhost
