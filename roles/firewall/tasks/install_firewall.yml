@@ -1,15 +1,12 @@
 ---
-- name: Get all packages
-  package_facts:
-    manager: auto
+- name: Install firewall if missing
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+  when: not firewall_installed
 
-- name: Check if firewall package is installed
-  set_fact:
-    firewall_installed: "{{ 'firewalld' in ansible_facts.packages }}"
-
-- name: Checking if firewalld is running and enabled
-  command: "{{ item }}"
-  register: service_state
-  loop:
-    - systemctl is-active firewalld
-    - systemctl is-enabled firewalld
+- name: Start firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
